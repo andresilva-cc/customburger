@@ -22,6 +22,16 @@ export default <Partial<Config>> {
         900: '#26272b'
       },
       white: '#ffffff'
+    },
+    fontFamily: {
+      heading: ['Londrina Solid', 'sans-serif'],
+      body: ['Signika', 'sans-serif']
+    },
+    fontSize: {
+      xs: '0.75rem',
+      base: '1rem',
+      xl: '1.25rem',
+      '2xl': '2.125rem'
     }
   }
 }
