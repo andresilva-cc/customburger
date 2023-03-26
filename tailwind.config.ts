@@ -32,6 +32,10 @@ export default <Partial<Config>> {
       base: '1rem',
       xl: '1.25rem',
       '2xl': '2.125rem'
+    },
+    borderRadius: {
+      DEFAULT: '0.3125rem',
+      lg: '0.625rem'
     }
   }
 }
