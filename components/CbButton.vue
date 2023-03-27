@@ -1,14 +1,3 @@
-<template>
-  <component
-    :is="component.tag"
-    v-bind="component.attributes"
-    class="flex items-center justify-center h-10 rounded-lg uppercase"
-    :class="colorClasses[props.color]"
-  >
-    <slot />
-  </component>
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue'
 
@@ -46,3 +35,14 @@ const colorClasses = {
   light: 'bg-light-50 hover:bg-light-100 active:bg-light-200 text-gray-900'
 }
 </script>
+
+<template>
+  <component
+    :is="component.tag"
+    v-bind="component.attributes"
+    class="flex items-center justify-center h-10 rounded-lg uppercase"
+    :class="colorClasses[props.color]"
+  >
+    <slot />
+  </component>
+</template>
