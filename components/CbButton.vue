@@ -40,7 +40,7 @@ const colorClasses = {
   <component
     :is="component.tag"
     v-bind="component.attributes"
-    class="flex items-center justify-center h-10 rounded-lg uppercase"
+    class="flex items-center justify-center h-10 rounded-lg uppercase transition hover:transition-none"
     :class="colorClasses[props.color]"
   >
     <slot />
