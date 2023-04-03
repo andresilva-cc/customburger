@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 
 const checked = ref(false)
+const isExpanded = ref(false)
 </script>
 
 <template>
@@ -20,8 +21,21 @@ const checked = ref(false)
         Light Button
       </CbButton>
     </div>
-    <div class="flex gap-4 mt-8">
+    <div class="mt-8">
       <CbCheckbox v-model="checked" />
+    </div>
+    <div class="mt-8 w-64">
+      <CbExpansionPanel v-model="isExpanded">
+        <template #title>
+          Vegetables
+        </template>
+        <template #content>
+          <div>Lettuce</div>
+          <div>Tomato</div>
+          <div>Onions</div>
+          <div>Picles</div>
+        </template>
+      </CbExpansionPanel>
     </div>
   </div>
 </template>
