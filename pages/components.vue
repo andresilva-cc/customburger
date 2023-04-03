@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const checked = ref(false)
+const isChecked = ref(false)
 const isExpanded = ref(false)
 </script>
 
@@ -22,7 +22,7 @@ const isExpanded = ref(false)
       </CbButton>
     </div>
     <div class="mt-8">
-      <CbCheckbox v-model="checked" />
+      <CbCheckbox v-model="isChecked" />
     </div>
     <div class="mt-8 w-64">
       <CbExpansionPanel v-model="isExpanded">
