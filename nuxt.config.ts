@@ -9,6 +9,9 @@ export default defineNuxtConfig({
       ]
     }
   },
+  css: [
+    '~/assets/css/app.css'
+  ],
   modules: [
     '@nuxtjs/eslint-module',
     '@nuxtjs/tailwindcss'
