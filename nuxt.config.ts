@@ -17,7 +17,8 @@ export default defineNuxtConfig({
         { name: 'msapplication-TileColor', content: '#ffffff' },
         { name: 'theme-color', content: '#ffffff' }
       ]
-    }
+    },
+    pageTransition: { name: 'page', mode: 'out-in' }
   },
   css: [
     '~/assets/css/app.css'
