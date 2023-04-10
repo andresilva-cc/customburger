@@ -55,7 +55,7 @@ const expansionPanels: ExpansionPanels = reactive({
             </template>
           </CbExpansionPanel>
         </div>
-        <CbButton class="mt-6">
+        <CbButton class="mt-6" to="/done">
           That's The Way I Like It
         </CbButton>
       </aside>
