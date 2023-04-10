@@ -25,7 +25,7 @@ function toggleIsExpanded () {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 overflow-hidden">
+  <div class="flex flex-col overflow-hidden">
     <button type="button" class="flex items-center justify-between" @click="toggleIsExpanded">
       <div class="uppercase font-heading text-xl">
         <slot name="title" />
@@ -33,7 +33,7 @@ function toggleIsExpanded () {
       <ChevronIcon class="w-4 h-4 transition duration-300 ease-in-out" :class="{ 'rotate-180': isExpanded }" />
     </button>
     <ExpansionTransition>
-      <div v-show="isExpanded" class="duration-300 ease-in-out">
+      <div v-show="isExpanded" class="duration-300 ease-in-out" :class="[isExpanded ? 'mt-4' : 'mt-0']">
         <slot name="content" />
       </div>
     </ExpansionTransition>
