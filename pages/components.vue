@@ -1,8 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 
 const isChecked = ref(false)
 const isExpanded = ref(false)
+const options = reactive([
+  { name: 'Lettuce', isChecked: false },
+  { name: 'Onion', isChecked: false },
+  { name: 'Pickle', isChecked: false },
+  { name: 'Tomato', isChecked: false }
+])
 </script>
 
 <template>
@@ -30,10 +36,15 @@ const isExpanded = ref(false)
           Vegetables
         </template>
         <template #content>
-          <div>Lettuce</div>
-          <div>Tomato</div>
-          <div>Onions</div>
-          <div>Picles</div>
+          <CbOption
+            v-for="(option, index) in options"
+            :key="index"
+            v-model="option.isChecked"
+            :icon-name="`${option.name}Ingredient`"
+            :bordered="index < options.length - 1"
+          >
+            {{ option.name }}
+          </CbOption>
         </template>
       </CbExpansionPanel>
     </div>
