@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-const props = defineProps<{
+interface Props {
   modelValue: boolean,
   iconName: string,
-  bordered: boolean
-}>()
+  bordered?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  bordered: false
+})
 
 const emit = defineEmits<{(e: 'update:modelValue', value: boolean): void}>()
 
