@@ -1,51 +1,63 @@
 <script setup lang="ts">
-import { reactive, watch } from 'vue'
+import { reactive } from 'vue'
 
 type Categories = Array<{
-  title: string,
+  name: string,
   isExpanded: boolean,
   options: Array<{
     name: string,
+    iconName: string,
     isChecked: boolean
   }>
 }>
 
 const categories: Categories = reactive([
   {
-    title: 'Vegetables',
+    name: 'Vegetables',
     isExpanded: true,
     options: [
-      { name: 'Lettuce', isChecked: false },
-      { name: 'Onion', isChecked: false },
-      { name: 'Pickle', isChecked: false },
-      { name: 'Tomato', isChecked: false }
+      { name: 'Lettuce', iconName: 'LettuceIngredient', isChecked: false },
+      { name: 'Onion', iconName: 'OnionIngredient', isChecked: false },
+      { name: 'Pickle', iconName: 'PickleIngredient', isChecked: false },
+      { name: 'Tomato', iconName: 'TomatoIngredient', isChecked: false }
     ]
   },
   {
-    title: 'Sauces',
+    name: 'Sauces',
     isExpanded: false,
     options: [
-      { name: 'Mayo', isChecked: false },
-      { name: 'Green Mayo', isChecked: false }
+      { name: 'Mayo', iconName: 'MayoIngredient', isChecked: false },
+      { name: 'Green Mayo', iconName: 'GreenMayoIngredient', isChecked: false }
     ]
   },
   {
-    title: 'Cheese',
+    name: 'Cheese',
     isExpanded: false,
     options: [
-      { name: 'Cheese', isChecked: false }
+      { name: 'Cheese', iconName: 'CheeseIngredient', isChecked: false }
     ]
   },
   {
-    title: 'Meat',
+    name: 'Meat',
     isExpanded: false,
     options: [
-      { name: 'Burger', isChecked: false },
-      { name: 'Chicken', isChecked: false },
-      { name: 'Bacon', isChecked: false }
+      { name: 'Burger', iconName: 'BurgerIngredient', isChecked: false },
+      { name: 'Chicken', iconName: 'ChickenIngredient', isChecked: false },
+      { name: 'Bacon', iconName: 'BaconIngredient', isChecked: false }
     ]
   }
 ])
+
+function onUpdateExpanded (newValue: boolean, name: string) {
+  categories.forEach((category) => {
+    if (category.name === name) {
+      category.isExpanded = newValue
+      return
+    }
+
+    category.isExpanded = false
+  })
+}
 </script>
 
 <template>
@@ -61,18 +73,19 @@ const categories: Categories = reactive([
         <div class="flex flex-col gap-6 py-6 px-4 bg-light-50 rounded-lg">
           <CbExpansionPanel
             v-for="category in categories"
-            :key="category.title"
-            v-model="category.isExpanded"
+            :key="category.name"
+            :model-value="category.isExpanded"
+            @update:model-value="onUpdateExpanded($event, category.name)"
           >
             <template #title>
-              {{ category.title }}
+              {{ category.name }}
             </template>
             <template #content>
               <CbOption
                 v-for="(option, index) in category.options"
                 :key="option.name"
                 v-model="option.isChecked"
-                :icon-name="`${option.name.split(' ').join('')}Ingredient`"
+                :icon-name="option.iconName"
                 :bordered="index < category.options.length - 1"
               >
                 {{ option.name }}
