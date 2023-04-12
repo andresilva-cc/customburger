@@ -1,31 +1,51 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, watch } from 'vue'
 
-type ExpansionPanels = {
-  [key: string]: {
-    title: string,
-    isExpanded: boolean
-  }
-}
+type Categories = Array<{
+  title: string,
+  isExpanded: boolean,
+  options: Array<{
+    name: string,
+    isChecked: boolean
+  }>
+}>
 
-const expansionPanels: ExpansionPanels = reactive({
-  vegetables: {
+const categories: Categories = reactive([
+  {
     title: 'Vegetables',
-    isExpanded: true
+    isExpanded: true,
+    options: [
+      { name: 'Lettuce', isChecked: false },
+      { name: 'Onion', isChecked: false },
+      { name: 'Pickle', isChecked: false },
+      { name: 'Tomato', isChecked: false }
+    ]
   },
-  sauces: {
+  {
     title: 'Sauces',
-    isExpanded: false
+    isExpanded: false,
+    options: [
+      { name: 'Mayo', isChecked: false },
+      { name: 'Green Mayo', isChecked: false }
+    ]
   },
-  cheese: {
+  {
     title: 'Cheese',
-    isExpanded: false
+    isExpanded: false,
+    options: [
+      { name: 'Cheese', isChecked: false }
+    ]
   },
-  meat: {
+  {
     title: 'Meat',
-    isExpanded: false
+    isExpanded: false,
+    options: [
+      { name: 'Burger', isChecked: false },
+      { name: 'Chicken', isChecked: false },
+      { name: 'Bacon', isChecked: false }
+    ]
   }
-})
+])
 </script>
 
 <template>
@@ -38,20 +58,25 @@ const expansionPanels: ExpansionPanels = reactive({
         <div class="w-[300px] h-[300px] mx-auto bg-secondary-500 rounded-lg" />
       </div>
       <aside class="w-[300px]">
-        <div class="flex flex-col gap-6 h-[411px] py-6 px-4 bg-light-50 rounded-lg">
+        <div class="flex flex-col gap-6 py-6 px-4 bg-light-50 rounded-lg">
           <CbExpansionPanel
-            v-for="key in Object.keys(expansionPanels)"
-            :key="key"
-            v-model="expansionPanels[key].isExpanded"
+            v-for="category in categories"
+            :key="category.title"
+            v-model="category.isExpanded"
           >
             <template #title>
-              {{ expansionPanels[key].title }}
+              {{ category.title }}
             </template>
             <template #content>
-              <div>Lettuce</div>
-              <div>Tomato</div>
-              <div>Onions</div>
-              <div>Picles</div>
+              <CbOption
+                v-for="(option, index) in category.options"
+                :key="option.name"
+                v-model="option.isChecked"
+                :icon-name="`${option.name.split(' ').join('')}Ingredient`"
+                :bordered="index < category.options.length - 1"
+              >
+                {{ option.name }}
+              </CbOption>
             </template>
           </CbExpansionPanel>
         </div>
