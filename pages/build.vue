@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 
 type Categories = Array<{
   name: string,
@@ -7,46 +7,54 @@ type Categories = Array<{
   options: Array<{
     name: string,
     iconName: string,
-    isChecked: boolean
+    differentPreviewIcon?: boolean
+    isChecked: boolean,
+    classes?: string
   }>
 }>
 
 const categories: Categories = reactive([
   {
-    name: 'Vegetables',
+    name: 'Sauces',
     isExpanded: true,
     options: [
-      { name: 'Lettuce', iconName: 'LettuceIngredient', isChecked: false },
-      { name: 'Onion', iconName: 'OnionIngredient', isChecked: false },
-      { name: 'Pickle', iconName: 'PickleIngredient', isChecked: false },
-      { name: 'Tomato', iconName: 'TomatoIngredient', isChecked: false }
-    ]
-  },
-  {
-    name: 'Sauces',
-    isExpanded: false,
-    options: [
-      { name: 'Mayo', iconName: 'MayoIngredient', isChecked: false },
-      { name: 'Green Mayo', iconName: 'GreenMayoIngredient', isChecked: false }
-    ]
-  },
-  {
-    name: 'Cheese',
-    isExpanded: false,
-    options: [
-      { name: 'Cheese', iconName: 'CheeseIngredient', isChecked: false }
+      { name: 'Mayo', iconName: 'MayoIngredient', isChecked: true, classes: 'bottom-10 z-[1]' },
+      { name: 'Green Mayo', iconName: 'GreenMayoIngredient', isChecked: false, classes: 'bottom-6 z-[1]' }
     ]
   },
   {
     name: 'Meat',
     isExpanded: false,
     options: [
-      { name: 'Burger', iconName: 'BurgerIngredient', isChecked: false },
-      { name: 'Chicken', iconName: 'ChickenIngredient', isChecked: false },
-      { name: 'Bacon', iconName: 'BaconIngredient', isChecked: false }
+      { name: 'Burger', iconName: 'BurgerIngredient', isChecked: true, classes: 'bottom-12 z-[2]' },
+      { name: 'Chicken', iconName: 'ChickenIngredient', isChecked: false, classes: 'bottom-12 z-[2]' },
+      { name: 'Bacon', iconName: 'BaconIngredient', differentPreviewIcon: true, isChecked: true, classes: 'bottom-12 z-[4]' }
+    ]
+  },
+  {
+    name: 'Cheese',
+    isExpanded: false,
+    options: [
+      { name: 'Cheese', iconName: 'CheeseIngredient', isChecked: true, classes: 'bottom-12 z-[3]' }
+    ]
+  },
+  {
+    name: 'Vegetables',
+    isExpanded: false,
+    options: [
+      { name: 'Lettuce', iconName: 'LettuceIngredient', differentPreviewIcon: true, isChecked: true, classes: 'bottom-20 z-[5]' },
+      { name: 'Onion', iconName: 'OnionIngredient', differentPreviewIcon: true, isChecked: true, classes: 'bottom-20 z-[5]' },
+      { name: 'Pickle', iconName: 'PickleIngredient', differentPreviewIcon: true, isChecked: true, classes: 'bottom-24 z-[5]' },
+      { name: 'Tomato', iconName: 'TomatoIngredient', differentPreviewIcon: true, isChecked: true, classes: 'bottom-16 z-[4]' }
     ]
   }
 ])
+
+const selectedIngredients = computed(() => {
+  return categories.flatMap((category) => {
+    return category.options.filter(option => option.isChecked)
+  })
+})
 
 function onUpdateExpanded (newValue: boolean, name: string) {
   categories.forEach((category) => {
@@ -67,8 +75,19 @@ function onUpdateExpanded (newValue: boolean, name: string) {
     </h1>
     <div class="flex-1 flex justify-center items-center">
       <div class="flex-1">
-        <div class="w-[300px] h-[300px] mx-auto bg-secondary-500 rounded-lg" />
+        <div class="relative w-[300px] h-[300px] mx-auto rounded-lg">
+          <UpperBreadIngredient class="absolute w-full h-auto bottom-36 z-10" />
+          <component
+            :is="`${ingredient.differentPreviewIcon ? 'Preview' : ''}${ingredient.iconName}`"
+            v-for="(ingredient, index) in selectedIngredients"
+            :key="index"
+            class="absolute w-full h-auto"
+            :class="ingredient.classes"
+          />
+          <LowerBreadIngredient class="absolute w-full h-auto bottom-0 " />
+        </div>
       </div>
+
       <aside class="w-[300px]">
         <div class="flex flex-col gap-6 py-6 px-4 bg-light-50 rounded-lg">
           <CbExpansionPanel
