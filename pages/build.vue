@@ -50,9 +50,9 @@ const categories: Categories = reactive([
   }
 ])
 
-const selectedIngredients = computed(() => {
+const ingredients = computed(() => {
   return categories.flatMap((category) => {
-    return category.options.filter(option => option.isChecked)
+    return category.options
   })
 })
 
@@ -77,18 +77,22 @@ function onUpdateExpanded (newValue: boolean, name: string) {
       <div class="flex-1">
         <div class="relative w-[300px] h-[300px] mx-auto rounded-lg">
           <UpperBreadIngredient class="absolute w-full h-auto bottom-36 z-10" />
-          <component
-            :is="`${ingredient.differentPreviewIcon ? 'Preview' : ''}${ingredient.iconName}`"
-            v-for="(ingredient, index) in selectedIngredients"
+          <IngredientTransition
+            v-for="(ingredient, index) in ingredients"
             :key="index"
-            class="absolute w-full h-auto"
-            :class="ingredient.classes"
-          />
+          >
+            <component
+              :is="`${ingredient.differentPreviewIcon ? 'Preview' : ''}${ingredient.iconName}`"
+              v-if="ingredient.isChecked"
+              class="absolute w-full h-auto"
+              :class="ingredient.classes"
+            />
+          </IngredientTransition>
           <LowerBreadIngredient class="absolute w-full h-auto bottom-0 " />
         </div>
       </div>
 
-      <aside class="w-[300px]">
+      <aside class="w-[300px] z-10">
         <div class="flex flex-col gap-6 py-6 px-4 bg-light-50 rounded-lg">
           <CbExpansionPanel
             v-for="category in categories"
