@@ -69,7 +69,7 @@ function onUpdateExpanded (newValue: boolean, name: string) {
 </script>
 
 <template>
-  <main class="flex flex-col h-full px-16 pb-16">
+  <main class="flex flex-col h-full px-16 pb-16 overflow-hidden">
     <h1 class="py-8 font-heading text-2xl text-center uppercase">
       Make Your Burger
     </h1>
