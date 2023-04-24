@@ -27,10 +27,10 @@ const windowWidth = computed(() => {
 
 @keyframes ingredient-enter {
   0% {
-    transform: translate(v-bind('`-${windowWidth}`'), -25px);
+    transform: translate(v-bind('`-${windowWidth}`'), -50px);
   }
   80% {
-    transform: translate(0px, -25px);
+    transform: translate(0px, -50px);
   }
   100% {
     transform: translate(0px, 0px);
@@ -42,10 +42,10 @@ const windowWidth = computed(() => {
     transform: translate(0px, 0px);
   }
   20% {
-    transform: translate(0px, -25px);
+    transform: translate(0px, -50px);
   }
   100% {
-    transform: translate(v-bind(windowWidth), -25px);
+    transform: translate(v-bind(windowWidth), -50px);
   }
 }
 </style>

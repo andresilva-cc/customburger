@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, computed } from 'vue'
+import { ref, reactive, computed } from 'vue'
 
 type Categories = Array<{
   name: string,
@@ -9,43 +9,50 @@ type Categories = Array<{
     iconName: string,
     differentPreviewIcon?: boolean
     isChecked: boolean,
-    classes?: string
+    zIndex: string,
+    distance: number,
   }>
 }>
+
+const router = useRouter()
+
+const isAnimationInProgress = ref(false)
+const currentAnimatingOption = ref('')
+const isFinished = ref(false)
 
 const categories: Categories = reactive([
   {
     name: 'Sauces',
     isExpanded: true,
     options: [
-      { name: 'Mayo', iconName: 'MayoIngredient', isChecked: true, classes: 'bottom-10 z-[1]' },
-      { name: 'Green Mayo', iconName: 'GreenMayoIngredient', isChecked: false, classes: 'bottom-6 z-[1]' }
+      { name: 'Mayo', iconName: 'MayoIngredient', isChecked: false, zIndex: 'z-[1]', distance: 38 },
+      { name: 'Green Mayo', iconName: 'GreenMayoIngredient', isChecked: false, zIndex: 'z-[1]', distance: 32 }
     ]
   },
   {
     name: 'Meat',
     isExpanded: false,
     options: [
-      { name: 'Burger', iconName: 'BurgerIngredient', isChecked: true, classes: 'bottom-12 z-[2]' },
-      { name: 'Chicken', iconName: 'ChickenIngredient', isChecked: false, classes: 'bottom-12 z-[2]' },
-      { name: 'Bacon', iconName: 'BaconIngredient', differentPreviewIcon: true, isChecked: true, classes: 'bottom-12 z-[4]' }
+      { name: 'Burger', iconName: 'BurgerIngredient', isChecked: false, zIndex: 'z-[2]', distance: 48 },
+      { name: 'Chicken', iconName: 'ChickenIngredient', isChecked: false, zIndex: 'z-[2]', distance: 48 },
+      { name: 'Bacon', iconName: 'BaconIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[4] mb-5', distance: 30 }
     ]
   },
   {
     name: 'Cheese',
     isExpanded: false,
     options: [
-      { name: 'Cheese', iconName: 'CheeseIngredient', isChecked: true, classes: 'bottom-12 z-[3]' }
+      { name: 'Cheese', iconName: 'CheeseIngredient', isChecked: false, zIndex: 'z-[3]', distance: 56 }
     ]
   },
   {
     name: 'Vegetables',
     isExpanded: false,
     options: [
-      { name: 'Lettuce', iconName: 'LettuceIngredient', differentPreviewIcon: true, isChecked: true, classes: 'bottom-20 z-[5]' },
-      { name: 'Onion', iconName: 'OnionIngredient', differentPreviewIcon: true, isChecked: true, classes: 'bottom-20 z-[5]' },
-      { name: 'Pickle', iconName: 'PickleIngredient', differentPreviewIcon: true, isChecked: true, classes: 'bottom-24 z-[5]' },
-      { name: 'Tomato', iconName: 'TomatoIngredient', differentPreviewIcon: true, isChecked: true, classes: 'bottom-16 z-[4]' }
+      { name: 'Lettuce', iconName: 'LettuceIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: 80 },
+      { name: 'Onion', iconName: 'OnionIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: 80 },
+      { name: 'Pickle', iconName: 'PickleIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: 96 },
+      { name: 'Tomato', iconName: 'TomatoIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[4]', distance: 64 }
     ]
   }
 ])
@@ -66,6 +73,26 @@ function onUpdateExpanded (newValue: boolean, name: string) {
     category.isExpanded = false
   })
 }
+
+function onUpdateOption (newValue: boolean, optionName: string) {
+  isAnimationInProgress.value = true
+  currentAnimatingOption.value = optionName
+
+  const ms = newValue ? 800 : 600
+
+  setTimeout(() => {
+    isAnimationInProgress.value = false
+    currentAnimatingOption.value = ''
+  }, ms)
+}
+
+function finish () {
+  isFinished.value = true
+
+  setTimeout(() => {
+    router.push('/done')
+  }, 2000)
+}
 </script>
 
 <template>
@@ -76,7 +103,12 @@ function onUpdateExpanded (newValue: boolean, name: string) {
     <div class="flex-1 flex justify-center items-center">
       <div class="flex-1">
         <div class="relative w-[300px] h-[300px] mx-auto rounded-lg">
-          <UpperBreadIngredient class="absolute w-full h-auto bottom-36 z-10" />
+          <UpperBreadTransition>
+            <UpperBreadIngredient
+              v-if="isFinished"
+              class="absolute w-full h-auto z-10 transition-all bottom-36 duration-[2s]"
+            />
+          </UpperBreadTransition>
           <IngredientTransition
             v-for="(ingredient, index) in ingredients"
             :key="index"
@@ -84,11 +116,15 @@ function onUpdateExpanded (newValue: boolean, name: string) {
             <component
               :is="`${ingredient.differentPreviewIcon ? 'Preview' : ''}${ingredient.iconName}`"
               v-if="ingredient.isChecked"
-              class="absolute w-full h-auto"
-              :class="ingredient.classes"
+              class="absolute w-full h-auto transition-all"
+              :class="ingredient.zIndex"
+              :style="{ bottom: `${isAnimationInProgress && currentAnimatingOption !== ingredient.name ? index * 40 : ingredient.distance}px` }"
             />
           </IngredientTransition>
-          <LowerBreadIngredient class="absolute w-full h-auto bottom-0 " />
+          <LowerBreadIngredient
+            class="absolute w-full h-auto transition-all"
+            :class="[isAnimationInProgress ? '-bottom-10' : 'bottom-0']"
+          />
         </div>
       </div>
 
@@ -110,13 +146,14 @@ function onUpdateExpanded (newValue: boolean, name: string) {
                 v-model="option.isChecked"
                 :icon-name="option.iconName"
                 :bordered="index < category.options.length - 1"
+                @update:model-value="onUpdateOption($event, option.name)"
               >
                 {{ option.name }}
               </CbOption>
             </template>
           </CbExpansionPanel>
         </div>
-        <CbButton class="mt-6" to="/done">
+        <CbButton class="mt-6" @click="finish">
           That's The Way I Like It
         </CbButton>
       </aside>
