@@ -1,30 +1,23 @@
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue'
+import type { Ingredient } from '~/types/Ingredient'
 
 type Categories = Array<{
   name: string,
   isExpanded: boolean,
-  options: Array<{
-    name: string,
-    iconName: string,
-    differentPreviewIcon?: boolean
-    isChecked: boolean,
-    zIndex: string,
-    distance: number,
-  }>
+  ingredients: Array<Ingredient>
 }>
 
 const router = useRouter()
 
-const isAnimationInProgress = ref(false)
 const currentAnimatingOption = ref('')
-const isFinished = ref(false)
+const hasFinished = ref(false)
 
 const categories: Categories = reactive([
   {
     name: 'Sauces',
     isExpanded: true,
-    options: [
+    ingredients: [
       { name: 'Mayo', iconName: 'MayoIngredient', isChecked: false, zIndex: 'z-[1]', distance: 38 },
       { name: 'Green Mayo', iconName: 'GreenMayoIngredient', isChecked: false, zIndex: 'z-[1]', distance: 32 }
     ]
@@ -32,7 +25,7 @@ const categories: Categories = reactive([
   {
     name: 'Meat',
     isExpanded: false,
-    options: [
+    ingredients: [
       { name: 'Burger', iconName: 'BurgerIngredient', isChecked: false, zIndex: 'z-[2]', distance: 48 },
       { name: 'Chicken', iconName: 'ChickenIngredient', isChecked: false, zIndex: 'z-[2]', distance: 48 },
       { name: 'Bacon', iconName: 'BaconIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[4] mb-5', distance: 30 }
@@ -41,14 +34,14 @@ const categories: Categories = reactive([
   {
     name: 'Cheese',
     isExpanded: false,
-    options: [
+    ingredients: [
       { name: 'Cheese', iconName: 'CheeseIngredient', isChecked: false, zIndex: 'z-[3]', distance: 56 }
     ]
   },
   {
     name: 'Vegetables',
     isExpanded: false,
-    options: [
+    ingredients: [
       { name: 'Lettuce', iconName: 'LettuceIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: 80 },
       { name: 'Onion', iconName: 'OnionIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: 80 },
       { name: 'Pickle', iconName: 'PickleIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: 96 },
@@ -59,7 +52,7 @@ const categories: Categories = reactive([
 
 const ingredients = computed(() => {
   return categories.flatMap((category) => {
-    return category.options
+    return category.ingredients
   })
 })
 
@@ -75,19 +68,17 @@ function onUpdateExpanded (newValue: boolean, name: string) {
 }
 
 function onUpdateOption (newValue: boolean, optionName: string) {
-  isAnimationInProgress.value = true
   currentAnimatingOption.value = optionName
 
   const ms = newValue ? 800 : 600
 
   setTimeout(() => {
-    isAnimationInProgress.value = false
     currentAnimatingOption.value = ''
   }, ms)
 }
 
 function finish () {
-  isFinished.value = true
+  hasFinished.value = true
 
   setTimeout(() => {
     router.push('/done')
@@ -102,30 +93,11 @@ function finish () {
     </h1>
     <div class="flex-1 flex justify-center items-center">
       <div class="flex-1">
-        <div class="relative w-[300px] h-[300px] mx-auto rounded-lg">
-          <UpperBreadTransition>
-            <UpperBreadIngredient
-              v-if="isFinished"
-              class="absolute w-full h-auto z-10 transition-all bottom-36 duration-[2s]"
-            />
-          </UpperBreadTransition>
-          <IngredientTransition
-            v-for="(ingredient, index) in ingredients"
-            :key="index"
-          >
-            <component
-              :is="`${ingredient.differentPreviewIcon ? 'Preview' : ''}${ingredient.iconName}`"
-              v-if="ingredient.isChecked"
-              class="absolute w-full h-auto transition-all"
-              :class="ingredient.zIndex"
-              :style="{ bottom: `${isAnimationInProgress && currentAnimatingOption !== ingredient.name ? index * 40 : ingredient.distance}px` }"
-            />
-          </IngredientTransition>
-          <LowerBreadIngredient
-            class="absolute w-full h-auto transition-all"
-            :class="[isAnimationInProgress ? '-bottom-10' : 'bottom-0']"
-          />
-        </div>
+        <BurgerPreview
+          :ingredients="ingredients"
+          :current-animating-option="currentAnimatingOption"
+          :has-finished="hasFinished"
+        />
       </div>
 
       <aside class="w-[300px] z-10">
@@ -139,20 +111,22 @@ function finish () {
             <template #title>
               {{ category.name }}
             </template>
+
             <template #content>
               <CbOption
-                v-for="(option, index) in category.options"
-                :key="option.name"
-                v-model="option.isChecked"
-                :icon-name="option.iconName"
-                :bordered="index < category.options.length - 1"
-                @update:model-value="onUpdateOption($event, option.name)"
+                v-for="(ingredient, index) in category.ingredients"
+                :key="ingredient.name"
+                v-model="ingredient.isChecked"
+                :icon-name="ingredient.iconName"
+                :bordered="index < category.ingredients.length - 1"
+                @update:model-value="onUpdateOption($event, ingredient.name)"
               >
-                {{ option.name }}
+                {{ ingredient.name }}
               </CbOption>
             </template>
           </CbExpansionPanel>
         </div>
+
         <CbButton class="mt-6" @click="finish">
           That's The Way I Like It
         </CbButton>
