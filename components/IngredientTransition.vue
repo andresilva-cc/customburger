@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+interface Props {
+  distance: number,
+  distanceWhenAnimating: number
+}
+
+const props = defineProps<Props>()
+
 const windowWidth = computed(() => {
   if (process.client) {
     return `${window.innerWidth}px`
@@ -27,25 +34,25 @@ const windowWidth = computed(() => {
 
 @keyframes ingredient-enter {
   0% {
-    transform: translate(v-bind('`-${windowWidth}`'), -50px);
+    transform: translate(v-bind('`-${windowWidth}`'), v-bind('`${props.distanceWhenAnimating}px`'));
   }
   80% {
-    transform: translate(0px, -50px);
+    transform: translate(0px, v-bind('`${props.distanceWhenAnimating}px`'));
   }
   100% {
-    transform: translate(0px, 0px);
+    transform: translate(0px,v-bind('`${props.distance}px`'));
   }
 }
 
 @keyframes ingredient-leave {
   0% {
-    transform: translate(0px, 0px);
+    transform: translate(0px, v-bind('`${props.distance}px`'));
   }
   20% {
-    transform: translate(0px, -50px);
+    transform: translate(0px, v-bind('`${props.distanceWhenAnimating}px`'));
   }
   100% {
-    transform: translate(v-bind(windowWidth), -50px);
+    transform: translate(v-bind(windowWidth), v-bind('`${props.distanceWhenAnimating}px`'));
   }
 }
 </style>

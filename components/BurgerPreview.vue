@@ -1,20 +1,15 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import type { Ingredient } from '~/types/Ingredient'
 
 interface Props {
   ingredients: Array<Ingredient>,
-  currentAnimatingOption?: string
+  isAnimationInProgress?: boolean
   hasFinished?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  currentAnimatingOption: '',
+  isAnimationInProgress: false,
   hasFinished: false
-})
-
-const isAnimationInProgress = computed(() => {
-  return !!props.currentAnimatingOption
 })
 </script>
 
@@ -29,17 +24,19 @@ const isAnimationInProgress = computed(() => {
     <IngredientTransition
       v-for="(ingredient, index) in props.ingredients"
       :key="index"
+      :distance="ingredient.distance"
+      :distance-when-animating="ingredient.distanceWhenAnimating"
     >
       <component
         :is="`${ingredient.differentPreviewIcon ? 'Preview' : ''}${ingredient.iconName}`"
         v-if="ingredient.isChecked"
         class="absolute w-full h-auto transition-all"
         :class="ingredient.zIndex"
-        :style="{ bottom: `${isAnimationInProgress && props.currentAnimatingOption !== ingredient.name ? index * 40 : ingredient.distance}px` }"
+        :style="{ transform: `translateY(${isAnimationInProgress ? ingredient.distanceWhenAnimating : ingredient.distance}px)` }"
       />
     </IngredientTransition>
     <LowerBreadIngredient
-      class="absolute w-full h-auto transition-all"
+      class="absolute -z-10 w-full h-auto transition-all"
       :class="[isAnimationInProgress ? '-bottom-10' : 'bottom-0']"
     />
   </div>

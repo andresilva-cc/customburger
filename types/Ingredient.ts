@@ -5,4 +5,5 @@ export type Ingredient = {
   isChecked: boolean,
   zIndex: string,
   distance: number
+  distanceWhenAnimating: number
 }

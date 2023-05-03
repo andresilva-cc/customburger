@@ -10,7 +10,7 @@ type Categories = Array<{
 
 const router = useRouter()
 
-const currentAnimatingOption = ref('')
+const isAnimationInProgress = ref(false)
 const hasFinished = ref(false)
 
 const categories: Categories = reactive([
@@ -18,34 +18,34 @@ const categories: Categories = reactive([
     name: 'Sauces',
     isExpanded: true,
     ingredients: [
-      { name: 'Mayo', iconName: 'MayoIngredient', isChecked: false, zIndex: 'z-[1]', distance: 38 },
-      { name: 'Green Mayo', iconName: 'GreenMayoIngredient', isChecked: false, zIndex: 'z-[1]', distance: 32 }
+      { name: 'Mayo', iconName: 'MayoIngredient', isChecked: false, zIndex: 'z-[1]', distance: 204, distanceWhenAnimating: 246 },
+      { name: 'Green Mayo', iconName: 'GreenMayoIngredient', isChecked: false, zIndex: 'z-[1]', distance: 204, distanceWhenAnimating: 246 }
     ]
   },
   {
     name: 'Meat',
     isExpanded: false,
     ingredients: [
-      { name: 'Burger', iconName: 'BurgerIngredient', isChecked: false, zIndex: 'z-[2]', distance: 48 },
-      { name: 'Chicken', iconName: 'ChickenIngredient', isChecked: false, zIndex: 'z-[2]', distance: 48 },
-      { name: 'Bacon', iconName: 'BaconIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[4] mb-5', distance: 30 }
+      { name: 'Burger', iconName: 'BurgerIngredient', isChecked: false, zIndex: 'z-[2]', distance: 168, distanceWhenAnimating: 164 },
+      { name: 'Chicken', iconName: 'ChickenIngredient', isChecked: false, zIndex: 'z-[2]', distance: 168, distanceWhenAnimating: 164 },
+      { name: 'Bacon', iconName: 'BaconIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[4] mb-5', distance: 148, distanceWhenAnimating: 112 }
     ]
   },
   {
     name: 'Cheese',
     isExpanded: false,
     ingredients: [
-      { name: 'Cheese', iconName: 'CheeseIngredient', isChecked: false, zIndex: 'z-[3]', distance: 56 }
+      { name: 'Cheese', iconName: 'CheeseIngredient', isChecked: false, zIndex: 'z-[3]', distance: 84, distanceWhenAnimating: 8 }
     ]
   },
   {
     name: 'Vegetables',
     isExpanded: false,
     ingredients: [
-      { name: 'Lettuce', iconName: 'LettuceIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: 80 },
-      { name: 'Onion', iconName: 'OnionIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: 80 },
-      { name: 'Pickle', iconName: 'PickleIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: 96 },
-      { name: 'Tomato', iconName: 'TomatoIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[4]', distance: 64 }
+      { name: 'Lettuce', iconName: 'LettuceIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: 148, distanceWhenAnimating: 48 },
+      { name: 'Onion', iconName: 'OnionIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: 112, distanceWhenAnimating: -16 },
+      { name: 'Pickle', iconName: 'PickleIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: 164, distanceWhenAnimating: -32 },
+      { name: 'Tomato', iconName: 'TomatoIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[4]', distance: 164, distanceWhenAnimating: -64 }
     ]
   }
 ])
@@ -67,13 +67,13 @@ function onUpdateExpanded (newValue: boolean, name: string) {
   })
 }
 
-function onUpdateOption (newValue: boolean, optionName: string) {
-  currentAnimatingOption.value = optionName
+function onUpdateOption (newValue: boolean) {
+  isAnimationInProgress.value = true
 
   const ms = newValue ? 800 : 600
 
   setTimeout(() => {
-    currentAnimatingOption.value = ''
+    isAnimationInProgress.value = false
   }, ms)
 }
 
@@ -95,7 +95,7 @@ function finish () {
       <div class="flex-1">
         <BurgerPreview
           :ingredients="ingredients"
-          :current-animating-option="currentAnimatingOption"
+          :is-animation-in-progress="isAnimationInProgress"
           :has-finished="hasFinished"
         />
       </div>
@@ -119,7 +119,7 @@ function finish () {
                 v-model="ingredient.isChecked"
                 :icon-name="ingredient.iconName"
                 :bordered="index < category.ingredients.length - 1"
-                @update:model-value="onUpdateOption($event, ingredient.name)"
+                @update:model-value="onUpdateOption($event)"
               >
                 {{ ingredient.name }}
               </CbOption>
