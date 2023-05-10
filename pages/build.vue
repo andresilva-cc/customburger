@@ -127,7 +127,7 @@ function finish () {
           </CbExpansionPanel>
         </div>
 
-        <CbButton class="mt-6" @click="finish">
+        <CbButton class="mt-6" :disabled="hasFinished" @click="finish">
           That's The Way I Like It
         </CbButton>
       </aside>
