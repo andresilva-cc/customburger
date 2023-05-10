@@ -16,15 +16,24 @@ const options = reactive([
     <h1 class="font-heading uppercase text-2xl mb-8">
       Components
     </h1>
-    <div class="flex flex-col gap-4 w-64">
-      <CbButton color="primary">
+    <div class="grid grid-cols-2 grid-rows-3 gap-4 w-[600px]">
+      <CbButton color="primary" class="col-start-1 row-start-1">
         Primary Button
       </CbButton>
-      <CbButton color="secondary">
+      <CbButton color="secondary" class="col-start-1 row-start-2">
         Secondary Button
       </CbButton>
-      <CbButton color="light">
+      <CbButton color="light" class="col-start-1 row-start-3">
         Light Button
+      </CbButton>
+      <CbButton color="primary" disabled class="col-start-2 row-start-1">
+        Disabled Primary Button
+      </CbButton>
+      <CbButton color="secondary" disabled class="col-start-2 row-start-2">
+        Disabled Secondary Button
+      </CbButton>
+      <CbButton color="light" disabled class="col-start-2 row-start-3">
+        Disabled Light Button
       </CbButton>
     </div>
     <div class="mt-8">
