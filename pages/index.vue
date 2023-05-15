@@ -1,6 +1,6 @@
 <template>
   <main class="flex justify-center items-center bg-light-50 h-full">
-    <div class="w-[250px] mx-4">
+    <div class="px-4 w-full md:w-[250px]">
       <CbLogo class="w-full" />
       <CbButton to="/build" class="mt-16">
         Make Your Burger
