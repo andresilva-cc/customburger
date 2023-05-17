@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<Props>(), {
       <UpperBreadTransition>
         <UpperBreadIngredient
           v-if="props.hasFinished"
-          class="relative w-full h-auto z-10 transition-all bottom-12 duration-1000"
+          class="absolute w-full h-auto z-10 transition-all bottom-32 duration-1000"
         />
       </UpperBreadTransition>
       <IngredientTransition
