@@ -18,7 +18,7 @@ const categories: Categories = reactive([
     name: 'Sauces',
     isExpanded: true,
     ingredients: [
-      { name: 'Mayo', iconName: 'MayoIngredient', isChecked: true, zIndex: 'z-[1]', distance: -26, distanceWhenAnimating: -48 },
+      { name: 'Mayo', iconName: 'MayoIngredient', isChecked: false, zIndex: 'z-[1]', distance: -28, distanceWhenAnimating: -8 },
       { name: 'Green Mayo', iconName: 'GreenMayoIngredient', isChecked: false, zIndex: 'z-[1]', distance: -26, distanceWhenAnimating: -48 }
     ]
   },
@@ -26,26 +26,26 @@ const categories: Categories = reactive([
     name: 'Meat',
     isExpanded: false,
     ingredients: [
-      { name: 'Burger', iconName: 'BurgerIngredient', isChecked: false, zIndex: 'z-[2]', distance: 168, distanceWhenAnimating: 164 },
-      { name: 'Chicken', iconName: 'ChickenIngredient', isChecked: false, zIndex: 'z-[2]', distance: 168, distanceWhenAnimating: 164 },
-      { name: 'Bacon', iconName: 'BaconIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[4] mb-5', distance: 148, distanceWhenAnimating: 112 }
+      { name: 'Burger', iconName: 'BurgerIngredient', isChecked: false, zIndex: 'z-[2]', distance: -60, distanceWhenAnimating: -72 },
+      { name: 'Chicken', iconName: 'ChickenIngredient', isChecked: false, zIndex: 'z-[2]', distance: -60, distanceWhenAnimating: -72 },
+      { name: 'Bacon', iconName: 'BaconIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[4]', distance: -80, distanceWhenAnimating: -112 }
     ]
   },
   {
     name: 'Cheese',
     isExpanded: false,
     ingredients: [
-      { name: 'Cheese', iconName: 'CheeseIngredient', isChecked: false, zIndex: 'z-[3]', distance: 84, distanceWhenAnimating: 8 }
+      { name: 'Cheese', iconName: 'CheeseIngredient', isChecked: false, zIndex: 'z-[3]', distance: -128, distanceWhenAnimating: -172 }
     ]
   },
   {
     name: 'Vegetables',
     isExpanded: false,
     ingredients: [
-      { name: 'Lettuce', iconName: 'LettuceIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: 148, distanceWhenAnimating: 48 },
-      { name: 'Onion', iconName: 'OnionIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: 112, distanceWhenAnimating: -16 },
-      { name: 'Pickle', iconName: 'PickleIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: 164, distanceWhenAnimating: -32 },
-      { name: 'Tomato', iconName: 'TomatoIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[4]', distance: 164, distanceWhenAnimating: -64 }
+      { name: 'Lettuce', iconName: 'LettuceIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: -64, distanceWhenAnimating: -108 },
+      { name: 'Onion', iconName: 'OnionIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: -100, distanceWhenAnimating: -148 },
+      { name: 'Pickle', iconName: 'PickleIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: -48, distanceWhenAnimating: -92 },
+      { name: 'Tomato', iconName: 'TomatoIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[4]', distance: -72, distanceWhenAnimating: -124 }
     ]
   }
 ])

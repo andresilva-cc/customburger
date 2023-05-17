@@ -14,12 +14,12 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <div class="flex items-end justify-center w-full h-full max-h-[300px] rounded-lg">
+  <div class="flex items-end justify-center w-full h-full rounded-lg">
     <div class="relative w-full max-w-[300px]">
       <UpperBreadTransition>
         <UpperBreadIngredient
           v-if="props.hasFinished"
-          class="relative w-full h-auto z-10 transition-all bottom-36 duration-[2s]"
+          class="relative w-full h-auto z-10 transition-all bottom-12 duration-1000"
         />
       </UpperBreadTransition>
       <IngredientTransition
@@ -37,7 +37,7 @@ const props = withDefaults(defineProps<Props>(), {
         />
       </IngredientTransition>
       <LowerBreadIngredient
-        class="relative -z-10 w-full h-auto transition-all"
+        class="relative -z-10 w-full h-auto transition-all duration-200"
         :class="[isAnimationInProgress ? '-bottom-5' : 'bottom-0']"
       />
     </div>
