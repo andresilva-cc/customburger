@@ -33,7 +33,7 @@ function toggleIsExpanded () {
       <ChevronIcon class="w-4 h-4 transition duration-300 ease-in-out" :class="{ 'rotate-180': isExpanded }" />
     </button>
     <ExpansionTransition>
-      <div v-show="isExpanded" class="duration-300 ease-in-out" :class="[isExpanded ? 'mt-4' : 'mt-0']">
+      <div v-show="isExpanded" class="duration-300 ease-in-out" :class="[isExpanded ? 'md:mt-4' : 'mt-0']">
         <slot name="content" />
       </div>
     </ExpansionTransition>

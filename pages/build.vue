@@ -18,8 +18,8 @@ const categories: Categories = reactive([
     name: 'Sauces',
     isExpanded: true,
     ingredients: [
-      { name: 'Mayo', iconName: 'MayoIngredient', isChecked: false, zIndex: 'z-[1]', distance: 204, distanceWhenAnimating: 246 },
-      { name: 'Green Mayo', iconName: 'GreenMayoIngredient', isChecked: false, zIndex: 'z-[1]', distance: 204, distanceWhenAnimating: 246 }
+      { name: 'Mayo', iconName: 'MayoIngredient', isChecked: true, zIndex: 'z-[1]', distance: -26, distanceWhenAnimating: -48 },
+      { name: 'Green Mayo', iconName: 'GreenMayoIngredient', isChecked: false, zIndex: 'z-[1]', distance: -26, distanceWhenAnimating: -48 }
     ]
   },
   {
@@ -87,12 +87,12 @@ function finish () {
 </script>
 
 <template>
-  <main class="flex flex-col h-full px-16 pb-16 overflow-hidden">
-    <h1 class="py-8 font-heading text-2xl text-center uppercase">
+  <main class="flex flex-col h-full md:px-16 md:pb-16 overflow-hidden">
+    <h1 class="py-4 md:py-8 font-heading text-2xl text-center uppercase">
       Make Your Burger
     </h1>
-    <div class="flex-1 flex justify-center items-center">
-      <div class="flex-1">
+    <div class="flex-1 flex flex-col md:flex-row justify-between md:justify-center items-center">
+      <div class="flex-1 w-full mb-8 md:mb-0">
         <BurgerPreview
           :ingredients="ingredients"
           :is-animation-in-progress="isAnimationInProgress"
@@ -100,8 +100,8 @@ function finish () {
         />
       </div>
 
-      <aside class="w-[300px] z-10">
-        <div class="flex flex-col gap-6 py-6 px-4 bg-light-50 rounded-lg">
+      <aside class="w-full bottom-0 md:w-[300px] z-10">
+        <div class="flex flex-col gap-3 md:gap-6 py-3 md:py-6 px-4 bg-light-50 resize-y rounded-t-lg md:rounded-lg">
           <CbExpansionPanel
             v-for="category in categories"
             :key="category.name"
@@ -127,7 +127,7 @@ function finish () {
           </CbExpansionPanel>
         </div>
 
-        <CbButton class="mt-6" :disabled="hasFinished" @click="finish">
+        <CbButton class="rounded-none md:rounded-lg md:mt-6" :disabled="hasFinished" @click="finish">
           That's The Way I Like It
         </CbButton>
       </aside>

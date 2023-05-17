@@ -34,8 +34,14 @@ export default <Partial<Config>> {
       '2xl': '2.125rem'
     },
     borderRadius: {
+      none: '0',
       DEFAULT: '0.3125rem',
       lg: '0.625rem'
+    },
+    extend: {
+      screens: {
+        'preview-height': { raw: '(min-height: 768px)' }
+      }
     }
   }
 }
