@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     '~/assets/css/app.css'
   ],
   modules: [
+    '@nuxtjs/i18n',
     '@nuxtjs/eslint-module',
     '@nuxtjs/tailwindcss'
   ],
@@ -37,5 +38,22 @@ export default defineNuxtConfig({
       global: true,
       pathPrefix: false
     }
-  ]
+  ],
+  i18n: {
+    locales: [
+      {
+        code: 'en',
+        name: 'English',
+        file: 'en-US.json'
+      },
+      {
+        code: 'br',
+        name: 'Português',
+        file: 'pt-BR.json'
+      }
+    ],
+    langDir: 'lang',
+    defaultLocale: 'en',
+    strategy: 'no_prefix'
+  }
 })

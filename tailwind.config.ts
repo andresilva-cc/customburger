@@ -21,7 +21,8 @@ export default <Partial<Config>> {
       gray: {
         900: '#26272b'
       },
-      white: '#ffffff'
+      white: '#ffffff',
+      transparent: 'transparent'
     },
     fontFamily: {
       heading: ['Londrina Solid', 'sans-serif'],

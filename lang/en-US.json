@@ -1,0 +1,33 @@
+{
+  "home": {
+    "startButton": "Make Your Burger",
+    "developedBy": "Developed By"
+  },
+  "build": {
+    "title": "Make Your Burger",
+    "categories": {
+      "sauces": "Sauces",
+      "meat": "Meat",
+      "cheese": "Cheese",
+      "vegetables": "Vegetables"
+    },
+    "ingredients": {
+      "mayo": "Mayo",
+      "greenMayo": "Green Mayo",
+      "burger": "Burger",
+      "chicken": "Chicken",
+      "bacon": "Bacon",
+      "cheese": "Cheese",
+      "lettuce": "Lettuce",
+      "onion": "Onion",
+      "pickle": "Pickle",
+      "tomato": "Tomato"
+    },
+    "doneButton": "That's The Way I Like It"
+  },
+  "done": {
+    "title": "We Got This",
+    "makeAnother": "Make Another",
+    "backToStart": "Back To Start"
+  }
+}

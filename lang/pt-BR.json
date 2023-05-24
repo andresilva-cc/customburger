@@ -1,0 +1,33 @@
+{
+  "home": {
+    "startButton": "Faça Seu Burger",
+    "developedBy": "Desenvolvido Por"
+  },
+  "build": {
+    "title": "Faça Seu Burger",
+    "categories": {
+      "sauces": "Molhos",
+      "meat": "Carne",
+      "cheese": "Queijo",
+      "vegetables": "Vegetais"
+    },
+    "ingredients": {
+      "mayo": "Maionese",
+      "greenMayo": "Maionese Verde",
+      "burger": "Hambúrguer de Carne",
+      "chicken": "Hambúrguer de Frango",
+      "bacon": "Bacon",
+      "cheese": "Queijo",
+      "lettuce": "Alface",
+      "onion": "Cebola",
+      "pickle": "Picles",
+      "tomato": "Tomate"
+    },
+    "doneButton": "É Assim Que Eu Gosto"
+  },
+  "done": {
+    "title": "Deixa Com A Gente",
+    "makeAnother": "Faça Outro",
+    "backToStart": "Voltar Para O Início"
+  }
+}

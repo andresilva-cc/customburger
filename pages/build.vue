@@ -6,46 +6,47 @@ type Categories = Array<{
   name: string,
   isExpanded: boolean,
   ingredients: Array<Ingredient>
-}>
+  }>
 
 const router = useRouter()
+const { t } = useI18n()
 
 const isAnimationInProgress = ref(false)
 const hasFinished = ref(false)
 
 const categories: Categories = reactive([
   {
-    name: 'Sauces',
+    name: t('build.categories.sauces'),
     isExpanded: true,
     ingredients: [
-      { name: 'Mayo', iconName: 'MayoIngredient', isChecked: false, zIndex: 'z-[1]', distance: -28, distanceWhenAnimating: -8 },
-      { name: 'Green Mayo', iconName: 'GreenMayoIngredient', isChecked: false, zIndex: 'z-[1]', distance: -26, distanceWhenAnimating: -48 }
+      { name: t('build.ingredients.mayo'), iconName: 'MayoIngredient', isChecked: false, zIndex: 'z-[1]', distance: -28, distanceWhenAnimating: -8 },
+      { name: t('build.ingredients.greenMayo'), iconName: 'GreenMayoIngredient', isChecked: false, zIndex: 'z-[1]', distance: -26, distanceWhenAnimating: -48 }
     ]
   },
   {
-    name: 'Meat',
+    name: t('build.categories.meat'),
     isExpanded: false,
     ingredients: [
-      { name: 'Burger', iconName: 'BurgerIngredient', isChecked: false, zIndex: 'z-[2]', distance: -60, distanceWhenAnimating: -72 },
-      { name: 'Chicken', iconName: 'ChickenIngredient', isChecked: false, zIndex: 'z-[2]', distance: -60, distanceWhenAnimating: -72 },
-      { name: 'Bacon', iconName: 'BaconIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[4]', distance: -80, distanceWhenAnimating: -112 }
+      { name: t('build.ingredients.burger'), iconName: 'BurgerIngredient', isChecked: false, zIndex: 'z-[2]', distance: -60, distanceWhenAnimating: -72 },
+      { name: t('build.ingredients.chicken'), iconName: 'ChickenIngredient', isChecked: false, zIndex: 'z-[2]', distance: -60, distanceWhenAnimating: -72 },
+      { name: t('build.ingredients.bacon'), iconName: 'BaconIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[4]', distance: -80, distanceWhenAnimating: -112 }
     ]
   },
   {
-    name: 'Cheese',
+    name: t('build.categories.cheese'),
     isExpanded: false,
     ingredients: [
-      { name: 'Cheese', iconName: 'CheeseIngredient', isChecked: false, zIndex: 'z-[3]', distance: -128, distanceWhenAnimating: -172 }
+      { name: t('build.ingredients.cheese'), iconName: 'CheeseIngredient', isChecked: false, zIndex: 'z-[3]', distance: -128, distanceWhenAnimating: -172 }
     ]
   },
   {
-    name: 'Vegetables',
+    name: t('build.categories.vegetables'),
     isExpanded: false,
     ingredients: [
-      { name: 'Lettuce', iconName: 'LettuceIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: -64, distanceWhenAnimating: -108 },
-      { name: 'Onion', iconName: 'OnionIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: -100, distanceWhenAnimating: -148 },
-      { name: 'Pickle', iconName: 'PickleIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: -48, distanceWhenAnimating: -92 },
-      { name: 'Tomato', iconName: 'TomatoIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[4]', distance: -72, distanceWhenAnimating: -124 }
+      { name: t('build.ingredients.lettuce'), iconName: 'LettuceIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: -64, distanceWhenAnimating: -108 },
+      { name: t('build.ingredients.onion'), iconName: 'OnionIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: -100, distanceWhenAnimating: -148 },
+      { name: t('build.ingredients.pickle'), iconName: 'PickleIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: -48, distanceWhenAnimating: -92 },
+      { name: t('build.ingredients.tomato'), iconName: 'TomatoIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[4]', distance: -72, distanceWhenAnimating: -124 }
     ]
   }
 ])
@@ -89,7 +90,7 @@ function finish () {
 <template>
   <main class="flex flex-col h-full md:px-16 md:pb-16 overflow-hidden">
     <h1 class="py-4 md:py-8 font-heading text-2xl text-center uppercase">
-      Make Your Burger
+      {{ $t('build.title') }}
     </h1>
     <div class="flex-1 flex flex-col md:flex-row justify-between md:justify-center items-center">
       <div class="flex-1 w-full mb-8 md:mb-0">
@@ -128,7 +129,7 @@ function finish () {
         </div>
 
         <CbButton class="rounded-none md:rounded-lg md:mt-6" :disabled="hasFinished" @click="finish">
-          That's The Way I Like It
+          {{ $t('build.doneButton') }}
         </CbButton>
       </aside>
     </div>
