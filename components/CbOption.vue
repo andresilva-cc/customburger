@@ -24,13 +24,23 @@ const isChecked = computed({
   }
 })
 
+function toggleIsChecked () {
+  if (props.disabled) { return }
+
+  isChecked.value = !isChecked.value
+}
+
 const IconComponent = resolveComponent(props.iconName)
 </script>
 
 <template>
   <div
-    class="flex items-center h-12"
-    :class="{ 'border-b-[1px] border-b-gray-900 border-opacity-20': props.bordered }"
+    class="flex items-center h-12 cursor-pointer"
+    :class="[
+      { 'border-b-[1px] border-b-gray-900 border-opacity-20': props.bordered },
+      props.disabled ? 'cursor-default' : 'cursor-pointer'
+    ]"
+    @click="toggleIsChecked"
   >
     <div class="flex-1">
       <slot />
