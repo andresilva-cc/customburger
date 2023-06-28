@@ -15,7 +15,6 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 function getDistance (ingredient: Ingredient): number {
-  // return ingredient.distances[0].distanceWhenAnimating
   const defaultDistance = ingredient.distances[0].distance
 
   if (props.isAnimationInProgress) {
