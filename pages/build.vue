@@ -38,13 +38,11 @@ function updatePreviousDistances (ingredient: Ingredient): void {
   ingredient.previousDistance = ingredient.distances[0]
 }
 
-function updateDistances (log = false): void {
+function updateDistances (): void {
   ingredients.value.forEach((ingredient) => {
     updatePreviousDistances(ingredient)
 
-    // console.log(ingredient.iconName, ingredient.isChecked)
     if (ingredient.distances.length === 1) {
-      if (log) { console.log('Length 1', ingredient.iconName, ingredient.distances[0].distance) }
       ingredient.currentDistance = ingredient.distances[0]
       return
     }
@@ -54,12 +52,10 @@ function updateDistances (log = false): void {
     })
 
     if (distances) {
-      if (log) { console.log('When', distances.when, ingredient.iconName, distances.distance) }
       ingredient.currentDistance = distances
       return
     }
 
-    if (log) { console.log('Default', ingredient.iconName, ingredient.distances[0].distance) }
     ingredient.currentDistance = ingredient.distances[0]
   })
 }
@@ -76,7 +72,7 @@ function onUpdateExpanded (newValue: boolean, name: string) {
 }
 
 function onUpdateOption (newValue: boolean) {
-  updateDistances(true)
+  updateDistances()
   isAnimationInProgress.value = true
   animationDirection.value = newValue ? 'entering' : 'exiting'
 
