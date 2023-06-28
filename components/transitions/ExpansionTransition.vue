@@ -28,13 +28,13 @@ function resetHeight (element: HTMLElement) {
 
 <template>
   <Transition
-    @before-enter="onBeforeEnter"
-    @enter="onEnter"
-    @after-enter="resetHeight"
-    @leave="onLeave"
-    @enter-cancelled="resetHeight"
-    @after-leave="resetHeight"
-    @leave-cancelled="resetHeight"
+    @before-enter="onBeforeEnter($event as HTMLElement)"
+    @enter="onEnter($event as HTMLElement)"
+    @after-enter="resetHeight($event as HTMLElement)"
+    @leave="onLeave($event as HTMLElement)"
+    @enter-cancelled="resetHeight($event as HTMLElement)"
+    @after-leave="resetHeight($event as HTMLElement)"
+    @leave-cancelled="resetHeight($event as HTMLElement)"
   >
     <slot />
   </Transition>
