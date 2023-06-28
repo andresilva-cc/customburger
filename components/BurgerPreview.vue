@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import type { AnimationDirection } from '~/types/AnimationDirection'
 import type { Ingredient } from '~/types/Ingredient'
 
 interface Props {
   ingredients: Array<Ingredient>,
   isAnimationInProgress?: boolean
-  animationDirection: string
+  animationDirection: AnimationDirection
   hasFinished?: boolean
 }
 

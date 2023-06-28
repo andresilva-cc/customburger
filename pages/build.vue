@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { ref, reactive, computed, onBeforeMount } from 'vue'
-import { Ingredient } from '~~/types/Ingredient'
+import type { AnimationDirection } from '~/types/AnimationDirection'
+import type { Ingredient } from '~/types/Ingredient'
 
 const router = useRouter()
 const { categoriesRepository } = useRepository()
 
 const isAnimationInProgress = ref(false)
-const animationDirection = ref('')
+const animationDirection = ref<AnimationDirection>('')
 const hasFinished = ref(false)
 
 const categories = reactive(categoriesRepository.getCategories())
