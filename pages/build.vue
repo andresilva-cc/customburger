@@ -127,6 +127,7 @@ function finish () {
                 v-model="ingredient.isChecked"
                 :icon-name="ingredient.iconName"
                 :bordered="index < category.ingredients.length - 1"
+                :disabled="isAnimationInProgress"
                 @update:model-value="onUpdateOption($event)"
               >
                 {{ ingredient.name }}

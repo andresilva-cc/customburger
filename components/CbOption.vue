@@ -4,11 +4,13 @@ import { computed } from 'vue'
 interface Props {
   modelValue: boolean,
   iconName: string,
-  bordered?: boolean
+  bordered?: boolean,
+  disabled?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  bordered: false
+  bordered: false,
+  disabled: false
 })
 
 const emit = defineEmits<{(e: 'update:modelValue', value: boolean): void}>()
@@ -36,6 +38,7 @@ const IconComponent = resolveComponent(props.iconName)
     <component :is="IconComponent" class="w-8 h-8 mr-4" />
     <CbCheckbox
       v-model="isChecked"
+      :disabled="props.disabled"
     />
   </div>
 </template>
