@@ -1,5 +1,5 @@
 export type Distances = {
-  when?: string
+  when: string
   distance: number
   distanceWhenAnimating: number
 }
