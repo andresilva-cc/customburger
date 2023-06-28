@@ -1,61 +1,68 @@
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
-import type { Ingredient } from '~/types/Ingredient'
-
-type Categories = Array<{
-  name: string,
-  isExpanded: boolean,
-  ingredients: Array<Ingredient>
-  }>
+import { ref, reactive, computed, onBeforeMount } from 'vue'
+import { Ingredient } from '~~/types/Ingredient'
 
 const router = useRouter()
-const { t } = useI18n()
+const { categoriesRepository } = useRepository()
 
 const isAnimationInProgress = ref(false)
+const animationDirection = ref('')
 const hasFinished = ref(false)
 
-const categories: Categories = reactive([
-  {
-    name: t('build.categories.sauces'),
-    isExpanded: true,
-    ingredients: [
-      { name: t('build.ingredients.mayo'), iconName: 'MayoIngredient', isChecked: false, zIndex: 'z-[1]', distance: -28, distanceWhenAnimating: -8 },
-      { name: t('build.ingredients.greenMayo'), iconName: 'GreenMayoIngredient', isChecked: false, zIndex: 'z-[1]', distance: -26, distanceWhenAnimating: -48 }
-    ]
-  },
-  {
-    name: t('build.categories.meat'),
-    isExpanded: false,
-    ingredients: [
-      { name: t('build.ingredients.burger'), iconName: 'BurgerIngredient', isChecked: false, zIndex: 'z-[2]', distance: -60, distanceWhenAnimating: -72 },
-      { name: t('build.ingredients.chicken'), iconName: 'ChickenIngredient', isChecked: false, zIndex: 'z-[2]', distance: -60, distanceWhenAnimating: -72 },
-      { name: t('build.ingredients.bacon'), iconName: 'BaconIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[4]', distance: -80, distanceWhenAnimating: -112 }
-    ]
-  },
-  {
-    name: t('build.categories.cheese'),
-    isExpanded: false,
-    ingredients: [
-      { name: t('build.ingredients.cheese'), iconName: 'CheeseIngredient', isChecked: false, zIndex: 'z-[3]', distance: -128, distanceWhenAnimating: -172 }
-    ]
-  },
-  {
-    name: t('build.categories.vegetables'),
-    isExpanded: false,
-    ingredients: [
-      { name: t('build.ingredients.lettuce'), iconName: 'LettuceIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: -64, distanceWhenAnimating: -108 },
-      { name: t('build.ingredients.onion'), iconName: 'OnionIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: -100, distanceWhenAnimating: -148 },
-      { name: t('build.ingredients.pickle'), iconName: 'PickleIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[5]', distance: -48, distanceWhenAnimating: -92 },
-      { name: t('build.ingredients.tomato'), iconName: 'TomatoIngredient', differentPreviewIcon: true, isChecked: false, zIndex: 'z-[4]', distance: -72, distanceWhenAnimating: -124 }
-    ]
-  }
-])
+const categories = reactive(categoriesRepository.getCategories())
 
 const ingredients = computed(() => {
   return categories.flatMap((category) => {
     return category.ingredients
   })
 })
+
+onBeforeMount(() => {
+  updateDistances()
+})
+
+function isIngredientChecked (name: string): boolean {
+  const ingredient = ingredients.value.find((ingredient) => {
+    return ingredient.iconName === name
+  })
+
+  return ingredient?.isChecked || false
+}
+
+function updatePreviousDistances (ingredient: Ingredient): void {
+  if (ingredient.previousDistance) {
+    ingredient.previousDistance = ingredient.currentDistance
+    return
+  }
+
+  ingredient.previousDistance = ingredient.distances[0]
+}
+
+function updateDistances (log = false): void {
+  ingredients.value.forEach((ingredient) => {
+    updatePreviousDistances(ingredient)
+
+    // console.log(ingredient.iconName, ingredient.isChecked)
+    if (ingredient.distances.length === 1) {
+      if (log) { console.log('Length 1', ingredient.iconName, ingredient.distances[0].distance) }
+      ingredient.currentDistance = ingredient.distances[0]
+      return
+    }
+
+    const distances = ingredient.distances.find((distances) => {
+      return isIngredientChecked(distances.when || '')
+    })
+
+    if (distances) {
+      if (log) { console.log('When', distances.when, ingredient.iconName, distances.distance) }
+      ingredient.currentDistance = distances
+      return
+    }
+
+    if (log) { console.log('Default', ingredient.iconName, ingredient.distances[0].distance) }
+    ingredient.currentDistance = ingredient.distances[0]
+  })
+}
 
 function onUpdateExpanded (newValue: boolean, name: string) {
   categories.forEach((category) => {
@@ -69,7 +76,9 @@ function onUpdateExpanded (newValue: boolean, name: string) {
 }
 
 function onUpdateOption (newValue: boolean) {
+  updateDistances(true)
   isAnimationInProgress.value = true
+  animationDirection.value = newValue ? 'entering' : 'exiting'
 
   const ms = newValue ? 800 : 600
 
@@ -93,10 +102,11 @@ function finish () {
       {{ $t('build.title') }}
     </h1>
     <div class="flex-1 flex flex-col md:flex-row justify-between md:justify-center items-center">
-      <div class="flex-1 w-full mb-8 md:mb-0">
+      <div class="flex-1 w-full mb-8 md:mb-0 md:translate-y-16">
         <BurgerPreview
           :ingredients="ingredients"
           :is-animation-in-progress="isAnimationInProgress"
+          :animation-direction="animationDirection"
           :has-finished="hasFinished"
         />
       </div>

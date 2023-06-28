@@ -4,6 +4,7 @@ import type { Ingredient } from '~/types/Ingredient'
 interface Props {
   ingredients: Array<Ingredient>,
   isAnimationInProgress?: boolean
+  animationDirection: string
   hasFinished?: boolean
 }
 
@@ -11,6 +12,21 @@ const props = withDefaults(defineProps<Props>(), {
   isAnimationInProgress: false,
   hasFinished: false
 })
+
+function getDistance (ingredient: Ingredient): number {
+  // return ingredient.distances[0].distanceWhenAnimating
+  const defaultDistance = ingredient.distances[0].distance
+
+  if (props.isAnimationInProgress) {
+    if (props.animationDirection === 'exiting') {
+      return ingredient.previousDistance?.distanceWhenAnimating || defaultDistance
+    }
+
+    return ingredient.currentDistance?.distanceWhenAnimating || defaultDistance
+  }
+
+  return ingredient.currentDistance?.distance || defaultDistance
+}
 </script>
 
 <template>
@@ -25,15 +41,14 @@ const props = withDefaults(defineProps<Props>(), {
       <IngredientTransition
         v-for="(ingredient, index) in props.ingredients"
         :key="index"
-        :distance="ingredient.distance"
-        :distance-when-animating="ingredient.distanceWhenAnimating"
+        :distance="ingredient.currentDistance?.distance || 0"
+        :distance-when-animating="ingredient.currentDistance?.distanceWhenAnimating || 0"
       >
         <component
-          :is="`${ingredient.differentPreviewIcon ? 'Preview' : ''}${ingredient.iconName}`"
+          :is="`${ingredient.hasDifferentPreviewIcon ? 'Preview' : ''}${ingredient.iconName}`"
           v-if="ingredient.isChecked"
           class="absolute w-full h-auto transition-all"
-          :class="ingredient.zIndex"
-          :style="{ transform: `translateY(${isAnimationInProgress ? ingredient.distanceWhenAnimating : ingredient.distance}px)` }"
+          :style="{ zIndex: ingredient.zIndex, transform: `translateY(${getDistance(ingredient)}px)` }"
         />
       </IngredientTransition>
       <LowerBreadIngredient
