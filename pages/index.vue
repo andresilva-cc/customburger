@@ -5,8 +5,7 @@ import { LocaleObject } from '@nuxtjs/i18n/dist/runtime/composables'
 const { localeProperties, locales, setLocale } = useI18n()
 
 const availableLocales = computed((): LocaleObject[] => {
-  // @ts-ignore
-  return locales.value
+  return locales.value as LocaleObject[]
 })
 </script>
 
