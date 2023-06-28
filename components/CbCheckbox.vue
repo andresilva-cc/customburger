@@ -37,7 +37,7 @@ const baseClasses = computed(() => {
       v-model="isChecked"
       :disabled="props.disabled"
       type="checkbox"
-      class="absolute w-5 h-5 z-[1] opacity-0 peer"
+      class="absolute w-5 h-5 z-[1] opacity-0 peer cursor-pointer"
     >
     <div
       class="flex justify-center items-center absolute w-5 h-5 rounded transition-all ease-out"
