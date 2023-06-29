@@ -1,7 +1,7 @@
 import { Composer } from 'vue-i18n'
 import { Ingredient } from '~~/types/Ingredient'
 
-type IngredientByCategory = {
+interface IngredientByCategory {
   [category: string]: Array<Ingredient>
 }
 
