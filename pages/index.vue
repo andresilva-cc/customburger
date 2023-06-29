@@ -6,7 +6,15 @@
         {{ $t('home.startButton') }}
       </CbButton>
       <div class="absolute left-0 right-0 bottom-8 text-xs font-light text-center">
-        <p>{{ $t('home.developedBy') }} André Silva</p>
+        <p class="mb-2">
+          {{ $t('home.developedBy') }}
+          <CbAnchor
+            href="https://andresilva.cc/"
+            target="_blank"
+          >
+            André Silva
+          </CbAnchor>
+        </p>
         <CbAnchor
           href="https://www.vecteezy.com/vector-art/1828417-burger-ingredient-illustration-set"
           target="_blank"
