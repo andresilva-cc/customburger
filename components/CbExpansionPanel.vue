@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-const props = withDefaults(
-  defineProps<{
-    modelValue: boolean
-  }>(),
-  {}
-)
+interface Props {
+  modelValue: boolean
+}
 
-const emit = defineEmits<{(e: 'update:modelValue', value: boolean): void}>()
+interface Emits {
+  (e: 'update:modelValue', value: boolean): void
+}
+
+const props = defineProps<Props>()
+
+const emit = defineEmits<Emits>()
 
 const isExpanded = computed({
   get () {

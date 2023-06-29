@@ -1,10 +1,10 @@
-export type Distances = {
+export interface Distances {
   when: string
   distance: number
   distanceWhenAnimating: number
 }
 
-export type Ingredient = {
+export interface Ingredient {
   name: string
   iconName: string
   hasDifferentPreviewIcon?: boolean

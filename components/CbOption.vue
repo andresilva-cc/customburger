@@ -8,12 +8,16 @@ interface Props {
   disabled?: boolean
 }
 
+interface Emits {
+  (e: 'update:modelValue', value: boolean): void
+}
+
 const props = withDefaults(defineProps<Props>(), {
   bordered: false,
   disabled: false
 })
 
-const emit = defineEmits<{(e: 'update:modelValue', value: boolean): void}>()
+const emit = defineEmits<Emits>()
 
 const isChecked = computed({
   get () {

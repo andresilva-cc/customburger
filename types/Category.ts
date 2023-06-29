@@ -1,6 +1,6 @@
 import { Ingredient } from '~/types/Ingredient'
 
-export type Category = {
+export interface Category {
   name: string,
   isExpanded: boolean,
   ingredients: Array<Ingredient>
