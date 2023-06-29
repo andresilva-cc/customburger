@@ -1,4 +1,4 @@
-import { Ingredient } from '~/types/Ingredient'
+import type { Ingredient } from '~/types/Ingredient'
 
 export interface Category {
   name: string,
