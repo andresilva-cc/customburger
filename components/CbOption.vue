@@ -47,7 +47,9 @@ const IconComponent = resolveComponent(props.iconName)
     <div class="flex-1">
       <slot />
     </div>
+
     <component :is="IconComponent" class="w-8 h-8 mr-4" />
+
     <CbCheckbox
       v-model="isChecked"
       :disabled="props.disabled"

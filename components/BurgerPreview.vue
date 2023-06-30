@@ -38,6 +38,7 @@ function getDistance (ingredient: Ingredient): number {
           class="absolute w-full h-auto z-10 transition-all bottom-32 duration-1000"
         />
       </UpperBreadTransition>
+
       <IngredientTransition
         v-for="(ingredient, index) in props.ingredients"
         :key="index"
@@ -51,6 +52,7 @@ function getDistance (ingredient: Ingredient): number {
           :style="{ zIndex: ingredient.zIndex, transform: `translateY(${getDistance(ingredient)}px)` }"
         />
       </IngredientTransition>
+
       <LowerBreadIngredient
         class="relative -z-10 w-full h-auto transition-all duration-200"
         :class="[isAnimationInProgress ? '-bottom-5' : 'bottom-0']"

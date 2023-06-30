@@ -14,6 +14,7 @@ const options = reactive([
     <h1 class="font-heading uppercase text-2xl mb-8">
       Components
     </h1>
+
     <div class="grid grid-cols-2 grid-rows-3 gap-4 w-[600px]">
       <CbButton color="primary" class="col-start-1 row-start-1">
         Primary Button
@@ -34,14 +35,17 @@ const options = reactive([
         Disabled Light Button
       </CbButton>
     </div>
+
     <div class="mt-8">
       <CbCheckbox v-model="isChecked" />
     </div>
+
     <div class="mt-8 w-64">
       <CbExpansionPanel v-model="isExpanded">
         <template #title>
           Vegetables
         </template>
+
         <template #content>
           <CbOption
             v-for="(option, index) in options"
