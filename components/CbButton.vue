@@ -47,6 +47,10 @@ const colorClasses = {
     active: 'active:bg-light-200'
   }
 }
+
+const currentColor = computed(() => {
+  return colorClasses[props.color]
+})
 </script>
 
 <template>
@@ -55,11 +59,11 @@ const colorClasses = {
     v-bind="component.attributes"
     class="flex w-full items-center justify-center h-10 rounded-lg uppercase select-none transition hover:transition-none"
     :class="[
-      colorClasses[props.color].base,
+      currentColor.base,
       {
         'opacity-50': props.disabled,
-        [colorClasses[props.color].hover]: !props.disabled,
-        [colorClasses[props.color].active]: !props.disabled
+        [currentColor.hover]: !props.disabled,
+        [currentColor.active]: !props.disabled
       }
     ]"
   >
