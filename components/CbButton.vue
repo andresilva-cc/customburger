@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-
 interface Props {
   color?: 'primary' | 'secondary' | 'light',
   to?: string

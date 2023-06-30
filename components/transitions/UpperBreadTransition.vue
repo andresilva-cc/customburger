@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-
 const windowHeight = computed(() => {
   if (process.client) {
     return `-${window.innerHeight}px`

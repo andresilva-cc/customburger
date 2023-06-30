@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, reactive, computed, onBeforeMount } from 'vue'
 import type { AnimationDirection } from '~/types/AnimationDirection'
 import type { Ingredient } from '~/types/Ingredient'
 

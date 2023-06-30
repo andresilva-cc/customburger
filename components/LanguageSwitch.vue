@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import type { LocaleObject } from '@nuxtjs/i18n/dist/runtime/composables'
 
 const { localeProperties, locales, setLocale } = useI18n()

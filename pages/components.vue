@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
-
 const isChecked = ref(false)
 const isExpanded = ref(false)
 const options = reactive([
