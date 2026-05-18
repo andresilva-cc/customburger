@@ -1,5 +1,5 @@
 import type { Composer } from 'vue-i18n'
-import { Ingredient } from '~~/types/Ingredient'
+import type { Ingredient } from '~~/types/Ingredient'
 
 interface IngredientByCategory {
   [category: string]: Array<Ingredient>

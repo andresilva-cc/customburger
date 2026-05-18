@@ -1,4 +1,4 @@
-import { Composer } from 'vue-i18n'
+import type { Composer } from 'vue-i18n'
 
 import type { IngredientsRepository } from '~/repositories/IngredientsRepository'
 import type { Category } from '~/types/Category'
